@@ -58,6 +58,18 @@
 #include <sentry.h>
 #endif
 
+extern "C" {
+    void _preloader(){}
+    void pcbnew_preload();
+    void eeschema_preload();
+    void gerbview_preload();
+    void pl_editor_preload();
+#pragma comment( linker, "/alternatename:_pcbnew_preload=__preloader" )
+#pragma comment( linker, "/alternatename:_eeschema_preload=__preloader" )
+#pragma comment( linker, "/alternatename:_gerbview_preload=__preloader" )
+#pragma comment( linker, "/alternatename:_pl_editor_preload=__preloader" )
+}
+
 // Only a single KIWAY is supported in this single_top top level component,
 // which is dedicated to loading only a single DSO.
 KIWAY    Kiway( &Pgm(), KFCTL_STANDALONE );
@@ -171,7 +183,7 @@ struct APP_SINGLE_TOP : public wxApp
         wxDISABLE_DEBUG_SUPPORT();
         wxSetAssertHandler( CustomAssertHandler );
 #endif
-
+pcbnew_preload();eeschema_preload();gerbview_preload();pl_editor_preload();
         // Perform platform-specific init tasks
         if( !KIPLATFORM::APP::Init() )
             return false;

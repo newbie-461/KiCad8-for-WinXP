@@ -264,7 +264,7 @@ void BOARD::IncrementTimeStamp()
         || m_CopperItemRTreeCache
         || m_maxClearanceValue.has_value() )
     {
-        std::unique_lock<std::shared_mutex> writeLock( m_CachesMutex );
+        std::unique_lock<std::mutex> writeLock( m_CachesMutex );
 
         m_IntersectsAreaCache.clear();
         m_EnclosedByAreaCache.clear();
@@ -779,7 +779,7 @@ int BOARD::GetMaxClearanceValue() const
 {
     if( !m_maxClearanceValue.has_value() )
     {
-        std::unique_lock<std::shared_mutex> writeLock( m_CachesMutex );
+        std::unique_lock<std::mutex> writeLock( m_CachesMutex );
 
         int worstClearance = m_designSettings->GetBiggestClearanceValue();
 

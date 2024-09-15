@@ -106,7 +106,7 @@ add_executable( gerbview WIN32 MACOSX_BUNDLE
     ${CMAKE_SOURCE_DIR}/common/pgm_base.cpp
     ${GERBVIEW_RESOURCES}
     )
-
+set_target_properties(gerbview PROPERTIES LINK_FLAGS_RELWITHDEBINFO "/SUBSYSTEM:WINDOWS\",5.01\"")
 if( KICAD_USE_SENTRY )
     set_property(SOURCE ${CMAKE_SOURCE_DIR}/common/pgm_base.cpp APPEND PROPERTY COMPILE_DEFINITIONS KICAD_SENTRY_DSN="${KICAD_SENTRY_DSN}")
 endif()

@@ -78,7 +78,7 @@ namespace TAO_PEGTL_NAMESPACE::internal
       [[nodiscard]] HANDLE open() const
       {
          SetLastError( 0 );
-#if( _WIN32_WINNT >= 0x0602 )
+#if( _WIN32_WINNT >= 0x0602 && 0)
          const HANDLE handle = ::CreateFile2( m_path.c_str(),
                                               GENERIC_READ,
                                               FILE_SHARE_READ,

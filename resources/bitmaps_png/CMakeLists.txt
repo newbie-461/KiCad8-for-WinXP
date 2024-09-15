@@ -873,14 +873,14 @@ if( NOT ALL_PNGS )
     file( GLOB_RECURSE ALL_PNGS ${CMAKE_CURRENT_SOURCE_DIR}/png/*.png )
 endif()
 
-if( MINGW )
+#if( MINGW )
     # This seems like a huge hack, but I can't find a better way.  If anyone else does, please
     # feel free to replace this with it...
     file( TO_CMAKE_PATH "${BITMAP_ARCHIVE_PATH}" TAR_OUTPUT_FILE )
     string( REGEX REPLACE "^([a-zA-Z]):/" "/\\1/" TAR_OUTPUT_FILE "${TAR_OUTPUT_FILE}" )
-else()
-    set( TAR_OUTPUT_FILE "${BITMAP_ARCHIVE_PATH}" )
-endif()
+#else()
+#    set( TAR_OUTPUT_FILE "${BITMAP_ARCHIVE_PATH}" )
+#endif()
 
 add_custom_target( bitmap_archive ALL
     COMMAND ${TAR} cfz "${TAR_OUTPUT_FILE}" .

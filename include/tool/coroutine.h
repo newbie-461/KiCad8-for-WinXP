@@ -52,6 +52,7 @@
 
 #ifdef _WIN32
 #include <windows.h>
+#define _WIN32_WINNT 0x0501
 #else                   // Linux, BSD, MacOS
 #include <unistd.h>     // getpagesize
 #include <sys/mman.h>   // mmap, mprotect, munmap

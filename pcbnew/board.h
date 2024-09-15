@@ -35,7 +35,7 @@
 #include <pcb_plot_params.h>
 #include <title_block.h>
 #include <tools/pcb_selection.h>
-#include <shared_mutex>
+#include <mutex>
 #include <list>
 
 class BOARD_DESIGN_SETTINGS;
@@ -1228,7 +1228,7 @@ public:
 
 public:
     // ------------ Run-time caches -------------
-    mutable std::shared_mutex                             m_CachesMutex;
+    mutable std::mutex                             m_CachesMutex;
     std::unordered_map<PTR_PTR_CACHE_KEY, bool>           m_IntersectsCourtyardCache;
     std::unordered_map<PTR_PTR_CACHE_KEY, bool>           m_IntersectsFCourtyardCache;
     std::unordered_map<PTR_PTR_CACHE_KEY, bool>           m_IntersectsBCourtyardCache;

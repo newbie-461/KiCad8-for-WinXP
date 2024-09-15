@@ -30,7 +30,6 @@
 #include <boost/ptr_container/ptr_vector.hpp>
 #include <memory>
 #include <mutex>
-#include <shared_mutex>
 #include <project.h>
 #include <string_utf8_map.h>
 #include <richio.h>
@@ -564,7 +563,7 @@ protected:
     std::map<wxString, LIB_TABLE_ROWS_ITER> m_rowsMap;
 
     /// Mutex to protect access to the rows vector
-    mutable std::shared_mutex m_mutex;
+    mutable std::mutex m_mutex;
 };
 
 #endif  // _LIB_TABLE_BASE_H_

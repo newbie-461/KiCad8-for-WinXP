@@ -199,7 +199,7 @@ LIB_TABLE_ROW* LIB_TABLE::findRow( const wxString& aNickName, bool aCheckIfEnabl
 
     do
     {
-        std::shared_lock<std::shared_mutex> lock( cur->m_mutex );
+        std::unique_lock<std::mutex> lock( cur->m_mutex );
 
         if( cur->m_rowsMap.count( aNickName ) )
             row = &*cur->m_rowsMap.at( aNickName );
@@ -307,7 +307,7 @@ std::vector<wxString> LIB_TABLE::GetLogicalLibs()
 
 bool LIB_TABLE::InsertRow( LIB_TABLE_ROW* aRow, bool doReplace )
 {
-    std::lock_guard<std::shared_mutex> lock( m_mutex );
+    std::lock_guard<std::mutex> lock( m_mutex );
 
     auto it = m_rowsMap.find( aRow->GetNickName() );
 
@@ -331,7 +331,7 @@ bool LIB_TABLE::InsertRow( LIB_TABLE_ROW* aRow, bool doReplace )
 
 bool LIB_TABLE::RemoveRow( const LIB_TABLE_ROW* aRow )
 {
-    std::lock_guard<std::shared_mutex> lock( m_mutex );
+    std::lock_guard<std::mutex> lock( m_mutex );
 
     bool found = false;
     auto it = m_rowsMap.find( aRow->GetNickName() );
@@ -368,7 +368,7 @@ bool LIB_TABLE::RemoveRow( const LIB_TABLE_ROW* aRow )
 
 bool LIB_TABLE::ReplaceRow( size_t aIndex, LIB_TABLE_ROW* aRow )
 {
-    std::lock_guard<std::shared_mutex> lock( m_mutex );
+    std::lock_guard<std::mutex> lock( m_mutex );
 
     if( aIndex >= m_rows.size() )
         return false;
@@ -383,7 +383,7 @@ bool LIB_TABLE::ReplaceRow( size_t aIndex, LIB_TABLE_ROW* aRow )
 
 bool LIB_TABLE::ChangeRowOrder( size_t aIndex, int aOffset )
 {
-    std::lock_guard<std::shared_mutex> lock( m_mutex );
+    std::lock_guard<std::mutex> lock( m_mutex );
 
     if( aIndex >= m_rows.size() )
         return false;
@@ -404,7 +404,7 @@ bool LIB_TABLE::ChangeRowOrder( size_t aIndex, int aOffset )
 
 void LIB_TABLE::TransferRows( LIB_TABLE_ROWS& aRowsList )
 {
-    std::lock_guard<std::shared_mutex> lock( m_mutex );
+    std::lock_guard<std::mutex> lock( m_mutex );
 
     m_rows.transfer( m_rows.end(), aRowsList.begin(), aRowsList.end(), aRowsList );
 

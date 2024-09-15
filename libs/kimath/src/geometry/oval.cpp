@@ -24,7 +24,7 @@
  */
 
 #include "geometry/oval.h"
-
+#include <algorithm>
 #include <trigo.h> // for RotatePoint
 
 

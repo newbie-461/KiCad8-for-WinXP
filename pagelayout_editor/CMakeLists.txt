@@ -77,7 +77,7 @@ add_executable( pl_editor WIN32 MACOSX_BUNDLE
     ${CMAKE_SOURCE_DIR}/common/pgm_base.cpp
     ${PL_EDITOR_RESOURCES}
     )
-
+set_target_properties(pl_editor PROPERTIES LINK_FLAGS_RELWITHDEBINFO "/SUBSYSTEM:WINDOWS\",5.01\"")
 if( KICAD_USE_SENTRY )
     set_property(SOURCE ${CMAKE_SOURCE_DIR}/common/pgm_base.cpp APPEND PROPERTY COMPILE_DEFINITIONS KICAD_SENTRY_DSN="${KICAD_SENTRY_DSN}")
 endif()

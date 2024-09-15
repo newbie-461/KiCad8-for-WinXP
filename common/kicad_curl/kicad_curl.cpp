@@ -31,7 +31,7 @@
 #include <ki_exception.h>   // THROW_IO_ERROR
 
 
-static std::shared_mutex s_curlMutex;
+static std::mutex s_curlMutex;
 static bool              s_curlShuttingDown = false;
 
 
@@ -56,7 +56,7 @@ void KICAD_CURL::Cleanup()
 }
 
 
-std::shared_mutex& KICAD_CURL::Mutex()
+std::mutex& KICAD_CURL::Mutex()
 {
     return s_curlMutex;
 }

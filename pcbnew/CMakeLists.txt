@@ -659,6 +659,8 @@ target_link_libraries( pcbnew_kiface_objects
 
 add_library( pcbnew_kiface MODULE )
 
+set_target_properties(pcbnew_kiface PROPERTIES LINK_FLAGS_RELWITHDEBINFO "/BASE:0x33000000")
+
 set_target_properties( pcbnew_kiface PROPERTIES
     # Decorate OUTPUT_NAME with PREFIX and SUFFIX, creating something like
     # _pcbnew.so, _pcbnew.dll, or _pcbnew.kiface

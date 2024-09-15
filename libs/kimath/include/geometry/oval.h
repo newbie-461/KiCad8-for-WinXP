@@ -25,6 +25,7 @@
 #define GEOMETRY_OVAL_H_
 
 #include <vector>
+#include <cstdlib>
 
 #include <math/vector2d.h>
 #include <geometry/eda_angle.h>

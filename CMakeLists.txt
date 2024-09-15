@@ -23,6 +23,9 @@
 #
 
 cmake_minimum_required( VERSION 3.21 FATAL_ERROR )
+set(VCPKG_INSTALL_OPTIONS "--x-use-aria2")
+set(KICAD_VERSION_EXTRA "XPMOD")
+
 
 # Generate DEPFILES without transforming relative paths
 cmake_policy( SET CMP0116 OLD )
@@ -1087,6 +1090,12 @@ list( APPEND CMAKE_CTEST_ARGUMENTS "--output-on-failure" )
 # Let CMake look in these directories for nested
 # 'CMakeLists.txt' files to process
 #================================================
+
+add_library(tlsfix STATIC IMPORTED)
+set_target_properties(tlsfix PROPERTIES IMPORTED_LOCATION "${CMAKE_CURRENT_SOURCE_DIR}/_xppatch/tlsfix.obj")
+
+add_library(pcbnew_preloader STATIC IMPORTED)
+set_target_properties(pcbnew_preloader PROPERTIES IMPORTED_LOCATION "${CMAKE_CURRENT_SOURCE_DIR}/_xppatch/pcbnew_preloader.lib")
 
 # Binaries ( CMake targets )
 add_subdirectory( resources )

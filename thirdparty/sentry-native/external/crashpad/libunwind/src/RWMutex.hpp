@@ -24,7 +24,7 @@
 
 namespace libunwind {
 
-#if defined(_LIBUNWIND_HAS_NO_THREADS)
+#if 1 || defined(_LIBUNWIND_HAS_NO_THREADS)
 
 class _LIBUNWIND_HIDDEN RWMutex {
 public:

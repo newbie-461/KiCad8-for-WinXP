@@ -28,7 +28,7 @@
 #include <widgets/progress_reporter_base.h>
 #include <functional>
 #include <memory>
-#include <shared_mutex>
+#include <mutex>
 #include <vector>
 
 class PROGRESS_REPORTER;
@@ -138,7 +138,7 @@ private:
     std::vector<KISTATUSBAR*> m_statusBars;
 
     /// Mutex to protect access to the m_jobs vector
-    mutable std::shared_mutex m_mutex;
+    mutable std::mutex m_mutex;
 };
 
 #endif

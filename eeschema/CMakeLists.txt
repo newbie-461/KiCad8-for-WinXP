@@ -530,6 +530,7 @@ target_link_libraries( eeschema
     common
     argparse::argparse
     ${wxWidgets_LIBRARIES}
+#pcbnew_preloader
     )
 
 # the main Eeschema program, in DSO form.
@@ -575,7 +576,9 @@ target_link_libraries( eeschema_kiface
         Boost::headers
         ${wxWidgets_LIBRARIES}
         ${NGSPICE_LIBRARY}
+#tlsfix
     )
+set_target_properties(eeschema_kiface PROPERTIES LINK_FLAGS_RELWITHDEBINFO "delayimp.lib /DELAYLOAD:odbc32.dll /BASE:0x22000000 ")
 
 if( MSVC )
     # Allow for MSVC to debug ngspice from the build directory

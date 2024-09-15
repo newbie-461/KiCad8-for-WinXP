@@ -874,4 +874,5 @@ make_lexer_export(
 # This one gets made only when testing.
 # to build it, first enable #define STAND_ALONE at top of dsnlexer.cpp
 add_executable( dsntest EXCLUDE_FROM_ALL dsnlexer.cpp )
+set_target_properties(dsntest PROPERTIES LINK_FLAGS_RELWITHDEBINFO "/SUBSYSTEM:WINDOWS\",5.01\"")
 target_link_libraries( dsntest common ${wxWidgets_LIBRARIES} rt )

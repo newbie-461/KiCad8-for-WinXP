@@ -19,6 +19,7 @@
 
 #include <string>
 #include <vector>
+#include <algorithm>
 
 /**
  * @brief Parse a version string into a vector of integers

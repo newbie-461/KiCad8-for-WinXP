@@ -50,6 +50,8 @@ add_executable( bitmap2component WIN32 MACOSX_BUNDLE
     ${BITMAP2COMPONENT_RESOURCES}
     )
 
+set_target_properties(bitmap2component PROPERTIES LINK_FLAGS_RELWITHDEBINFO "/SUBSYSTEM:WINDOWS\",5.01\"")
+
 target_link_libraries( bitmap2component
     common
     ${wxWidgets_LIBRARIES}

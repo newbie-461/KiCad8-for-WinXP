@@ -29,6 +29,7 @@
 
 #include <limits>           // for numeric_limits
 #include <stdlib.h>         // for abs
+#include <algorithm>
 #include <type_traits>      // for swap
 
 #include <geometry/seg.h>

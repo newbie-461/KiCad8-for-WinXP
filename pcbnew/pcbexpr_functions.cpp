@@ -140,7 +140,7 @@ static void existsOnLayerFunc( LIBEVAL::CONTEXT* aCtx, void *self )
                     BOARD* board = item->GetBoard();
 
                     {
-                        std::shared_lock<std::shared_mutex> readLock( board->m_CachesMutex );
+                        std::unique_lock<std::mutex> readLock( board->m_CachesMutex );
 
                         auto i = board->m_LayerExpressionCache.find( layerName );
 
@@ -159,7 +159,7 @@ static void existsOnLayerFunc( LIBEVAL::CONTEXT* aCtx, void *self )
                     }
 
                     {
-                        std::unique_lock<std::shared_mutex> writeLock( board->m_CachesMutex );
+                        std::unique_lock<std::mutex> writeLock( board->m_CachesMutex );
                         board->m_LayerExpressionCache[ layerName ] = mask;
                     }
 
@@ -285,7 +285,7 @@ static void intersectsCourtyardFunc( LIBEVAL::CONTEXT* aCtx, void* self )
 
                             if( ( item->GetFlags() & ROUTER_TRANSIENT ) == 0 )
                             {
-                                std::shared_lock<std::shared_mutex> readLock( board->m_CachesMutex );
+                                std::unique_lock<std::mutex> readLock( board->m_CachesMutex );
 
                                 auto i = board->m_IntersectsCourtyardCache.find( key );
 
@@ -298,7 +298,7 @@ static void intersectsCourtyardFunc( LIBEVAL::CONTEXT* aCtx, void* self )
 
                             if( ( item->GetFlags() & ROUTER_TRANSIENT ) == 0 )
                             {
-                                std::unique_lock<std::shared_mutex> cacheLock( board->m_CachesMutex );
+                                std::unique_lock<std::mutex> cacheLock( board->m_CachesMutex );
                                 board->m_IntersectsCourtyardCache[ key ] = res;
                             }
 
@@ -349,7 +349,7 @@ static void intersectsFrontCourtyardFunc( LIBEVAL::CONTEXT* aCtx, void* self )
 
                             if( ( item->GetFlags() & ROUTER_TRANSIENT ) == 0 )
                             {
-                                std::shared_lock<std::shared_mutex> readLock( board->m_CachesMutex );
+                                std::unique_lock<std::mutex> readLock( board->m_CachesMutex );
 
                                 auto i = board->m_IntersectsFCourtyardCache.find( key );
 
@@ -361,7 +361,7 @@ static void intersectsFrontCourtyardFunc( LIBEVAL::CONTEXT* aCtx, void* self )
 
                             if( ( item->GetFlags() & ROUTER_TRANSIENT ) == 0 )
                             {
-                                std::unique_lock<std::shared_mutex> writeLock( board->m_CachesMutex );
+                                std::unique_lock<std::mutex> writeLock( board->m_CachesMutex );
                                 board->m_IntersectsFCourtyardCache[ key ] = res;
                             }
 
@@ -412,7 +412,7 @@ static void intersectsBackCourtyardFunc( LIBEVAL::CONTEXT* aCtx, void* self )
 
                             if( ( item->GetFlags() & ROUTER_TRANSIENT ) == 0 )
                             {
-                                std::shared_lock<std::shared_mutex> readLock( board->m_CachesMutex );
+                                std::unique_lock<std::mutex> readLock( board->m_CachesMutex );
 
                                 auto i = board->m_IntersectsBCourtyardCache.find( key );
 
@@ -424,7 +424,7 @@ static void intersectsBackCourtyardFunc( LIBEVAL::CONTEXT* aCtx, void* self )
 
                             if( ( item->GetFlags() & ROUTER_TRANSIENT ) == 0 )
                             {
-                                std::unique_lock<std::shared_mutex> writeLock( board->m_CachesMutex );
+                                std::unique_lock<std::mutex> writeLock( board->m_CachesMutex );
                                 board->m_IntersectsBCourtyardCache[ key ] = res;
                             }
 
@@ -683,7 +683,7 @@ static void intersectsAreaFunc( LIBEVAL::CONTEXT* aCtx, void* self )
 
                                 if( ( item->GetFlags() & ROUTER_TRANSIENT ) == 0 )
                                 {
-                                    std::shared_lock<std::shared_mutex> readLock( board->m_CachesMutex );
+                                    std::unique_lock<std::mutex> readLock( board->m_CachesMutex );
 
                                     auto i = board->m_IntersectsAreaCache.find( key );
 
@@ -695,7 +695,7 @@ static void intersectsAreaFunc( LIBEVAL::CONTEXT* aCtx, void* self )
 
                                 if( ( item->GetFlags() & ROUTER_TRANSIENT ) == 0 )
                                 {
-                                    std::unique_lock<std::shared_mutex> writeLock( board->m_CachesMutex );
+                                    std::unique_lock<std::mutex> writeLock( board->m_CachesMutex );
                                     board->m_IntersectsAreaCache[ key ] = collides;
                                 }
 
@@ -761,7 +761,7 @@ static void enclosedByAreaFunc( LIBEVAL::CONTEXT* aCtx, void* self )
 
                             if( ( item->GetFlags() & ROUTER_TRANSIENT ) == 0 )
                             {
-                                std::shared_lock<std::shared_mutex> readLock( board->m_CachesMutex );
+                                std::unique_lock<std::mutex> readLock( board->m_CachesMutex );
 
                                 auto i = board->m_EnclosedByAreaCache.find( key );
 
@@ -797,7 +797,7 @@ static void enclosedByAreaFunc( LIBEVAL::CONTEXT* aCtx, void* self )
 
                             if( ( item->GetFlags() & ROUTER_TRANSIENT ) == 0 )
                             {
-                                std::unique_lock<std::shared_mutex> writeLock( board->m_CachesMutex );
+                                std::unique_lock<std::mutex> writeLock( board->m_CachesMutex );
                                 board->m_EnclosedByAreaCache[ key ] = enclosedByArea;
                             }
 

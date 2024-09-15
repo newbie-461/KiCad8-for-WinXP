@@ -347,7 +347,7 @@ const BOX2I ZONE::GetBoundingBox() const
         std::unordered_map<const ZONE*, BOX2I>& cache = board->m_ZoneBBoxCache;
 
         {
-            std::shared_lock<std::shared_mutex> readLock( board->m_CachesMutex );
+            std::unique_lock<std::mutex> readLock( board->m_CachesMutex );
 
             auto cacheIter = cache.find( this );
 
@@ -358,7 +358,7 @@ const BOX2I ZONE::GetBoundingBox() const
         BOX2I bbox = m_Poly->BBox();
 
         {
-            std::unique_lock<std::shared_mutex> writeLock( board->m_CachesMutex );
+            std::unique_lock<std::mutex> writeLock( board->m_CachesMutex );
             cache[ this ] = bbox;
         }
 

@@ -26,6 +26,10 @@ add_executable( idfcyl idf_cylinder.cpp )
 add_executable( idfrect idf_rect.cpp )
 add_executable( dxf2idf dxf2idfmain.cpp dxf2idf.cpp )
 add_executable( idf2vrml idf2vrml.cpp )
+set_target_properties(idfcyl PROPERTIES LINK_FLAGS_RELWITHDEBINFO "/SUBSYSTEM:CONSOLE\",5.01\"")
+set_target_properties(idfrect PROPERTIES LINK_FLAGS_RELWITHDEBINFO "/SUBSYSTEM:CONSOLE\",5.01\"")
+set_target_properties(dxf2idf PROPERTIES LINK_FLAGS_RELWITHDEBINFO "/SUBSYSTEM:CONSOLE\",5.01\"")
+set_target_properties(idf2vrml PROPERTIES LINK_FLAGS_RELWITHDEBINFO "/SUBSYSTEM:CONSOLE\",5.01\"")
 
 target_link_libraries( dxf2idf
     dxflib_qcad

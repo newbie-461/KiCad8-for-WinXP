@@ -147,7 +147,7 @@ bool KIPLATFORM::APP::AttachConsole( bool aTryAlloc )
 
 bool KIPLATFORM::APP::IsOperatingSystemUnsupported()
 {
-#if defined( PYTHON_VERSION_MAJOR ) && ( ( PYTHON_VERSION_MAJOR == 3 && PYTHON_VERSION_MINOR >= 8 ) \
+#if 0 && defined( PYTHON_VERSION_MAJOR ) && ( ( PYTHON_VERSION_MAJOR == 3 && PYTHON_VERSION_MINOR >= 8 ) \
              || PYTHON_VERSION_MAJOR > 3 )
     // Python 3.8 switched to Windows 8+ API, we do not support Windows 7 and will not
     // attempt to hack around it. A normal user will never get here because the Python DLL
@@ -163,6 +163,7 @@ bool KIPLATFORM::APP::IsOperatingSystemUnsupported()
 
 bool KIPLATFORM::APP::RegisterApplicationRestart( const wxString& aCommandLine )
 {
+    return false;
     // Command line arguments with spaces require quotes.
     wxString restartCmd = wxS( "\"" ) + aCommandLine + wxS( "\"" );
 
@@ -182,6 +183,7 @@ bool KIPLATFORM::APP::RegisterApplicationRestart( const wxString& aCommandLine )
 
 bool KIPLATFORM::APP::UnregisterApplicationRestart()
 {
+    return false;
     // Note, this isn't required to be used on Windows if you are just closing the program
     return SUCCEEDED( ::UnregisterApplicationRestart() );
 }
@@ -189,14 +191,14 @@ bool KIPLATFORM::APP::UnregisterApplicationRestart()
 
 bool KIPLATFORM::APP::SupportsShutdownBlockReason()
 {
-    return true;
+    return false;//true;
 }
 
 
 void KIPLATFORM::APP::RemoveShutdownBlockReason( wxWindow* aWindow )
 {
     // Destroys any block reason that may have existed
-    ShutdownBlockReasonDestroy( aWindow->GetHandle() );
+    //ShutdownBlockReasonDestroy( aWindow->GetHandle() );
 }
 
 
@@ -206,9 +208,9 @@ void KIPLATFORM::APP::SetShutdownBlockReason( wxWindow* aWindow, const wxString&
     // This is used in conjunction with handling WM_QUERYENDSESSION (wxCloseEvent)
     // ShutdownBlockReasonCreate does not block by itself
 
-    ShutdownBlockReasonDestroy( aWindow->GetHandle() ); // Destroys any existing or nonexisting reason
+    //ShutdownBlockReasonDestroy( aWindow->GetHandle() ); // Destroys any existing or nonexisting reason
 
-    ShutdownBlockReasonCreate( aWindow->GetHandle(), aReason.wc_str() );
+    //ShutdownBlockReasonCreate( aWindow->GetHandle(), aReason.wc_str() );
 }
 
 

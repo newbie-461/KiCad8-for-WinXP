@@ -33,7 +33,7 @@
 #include <cstddef>
 #include <exception>
 #include <sstream>
-#include <shared_mutex>
+#include <mutex>
 #include <wx/app.h>
 
 #include <build_version.h>
@@ -124,7 +124,6 @@ KICAD_CURL_EASY::KICAD_CURL_EASY() :
 
     if( !m_CURL )
         THROW_IO_ERROR( "Unable to initialize CURL session" );
-
     curl_easy_setopt( m_CURL, CURLOPT_WRITEFUNCTION, write_callback );
     curl_easy_setopt( m_CURL, CURLOPT_WRITEDATA, static_cast<void*>( &m_buffer ) );
 
@@ -135,7 +134,7 @@ KICAD_CURL_EASY::KICAD_CURL_EASY() :
     curl_easy_setopt( m_CURL, CURLOPT_PROTOCOLS, CURLPROTO_HTTP | CURLPROTO_HTTPS );
 #endif
 
-#ifdef _WIN32
+#ifdef _WIN32_dummy
     long sslOpts = CURLSSLOPT_NATIVE_CA;
 
     POLICY_CURL_SSL_REVOKE policyState = KIPLATFORM::POLICY::GetPolicyEnum<POLICY_CURL_SSL_REVOKE>( POLICY_KEY_REQUESTS_CURL_REVOKE );
@@ -151,6 +150,7 @@ KICAD_CURL_EASY::KICAD_CURL_EASY() :
     // We need this to use the Windows Certificate store
     curl_easy_setopt( m_CURL, CURLOPT_SSL_OPTIONS, sslOpts );
 #endif
+    curl_easy_setopt( m_CURL, CURLOPT_SSL_VERIFYPEER, FALSE); //TODO: use local cacert.pem
 
     if( wxGetEnv( wxT( "KICAD_CURL_VERBOSE" ), nullptr ) )
     {
@@ -194,7 +194,7 @@ KICAD_CURL_EASY::~KICAD_CURL_EASY()
 
 int KICAD_CURL_EASY::Perform()
 {
-    std::shared_lock lock( KICAD_CURL::Mutex(), std::try_to_lock );
+    std::unique_lock lock( KICAD_CURL::Mutex(), std::try_to_lock );
 
     // If can't lock, we should be in the process of tearing down.
     if( !lock )

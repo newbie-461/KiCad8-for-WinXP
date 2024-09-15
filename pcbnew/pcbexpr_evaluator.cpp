@@ -63,7 +63,7 @@ public:
         BOARD*          board = static_cast<PCBEXPR_CONTEXT*>( aCtx )->GetBoard();
 
         {
-            std::shared_lock<std::shared_mutex> readLock( board->m_CachesMutex );
+            std::unique_lock<std::mutex> readLock( board->m_CachesMutex );
 
             auto i = board->m_LayerExpressionCache.find( layerName );
 
@@ -82,7 +82,7 @@ public:
         }
 
         {
-            std::unique_lock<std::shared_mutex> writeLock( board->m_CachesMutex );
+            std::unique_lock<std::mutex> writeLock( board->m_CachesMutex );
             board->m_LayerExpressionCache[ layerName ] = mask;
         }
 

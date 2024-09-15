@@ -222,7 +222,7 @@ std::shared_ptr<BACKGROUND_JOB> BACKGROUND_JOBS_MONITOR::Create( const wxString&
     job->m_name = aName;
     job->m_reporter = std::make_shared<BACKGROUND_JOB_REPORTER>( this, job );
 
-    std::lock_guard<std::shared_mutex> lock( m_mutex );
+    std::lock_guard<std::mutex> lock( m_mutex );
     m_jobs.push_back( job );
 
     if( m_shownDialogs.size() > 0 )
@@ -258,7 +258,7 @@ void BACKGROUND_JOBS_MONITOR::Remove( std::shared_ptr<BACKGROUND_JOB> aJob )
         }
     }
 
-    std::lock_guard<std::shared_mutex> lock( m_mutex );
+    std::lock_guard<std::mutex> lock( m_mutex );
     m_jobs.erase( std::remove_if( m_jobs.begin(), m_jobs.end(),
                                   [&]( std::shared_ptr<BACKGROUND_JOB> job )
                                {
@@ -298,7 +298,7 @@ void BACKGROUND_JOBS_MONITOR::ShowList( wxWindow* aParent, wxPoint aPos )
 {
     BACKGROUND_JOB_LIST* list = new BACKGROUND_JOB_LIST( aParent, aPos );
 
-    std::shared_lock<std::shared_mutex> lock( m_mutex, std::try_to_lock );
+    std::unique_lock<std::mutex> lock( m_mutex, std::try_to_lock );
 
     for( std::shared_ptr<BACKGROUND_JOB> job : m_jobs )
     {
@@ -321,7 +321,7 @@ void BACKGROUND_JOBS_MONITOR::ShowList( wxWindow* aParent, wxPoint aPos )
 
 void BACKGROUND_JOBS_MONITOR::jobUpdated( std::shared_ptr<BACKGROUND_JOB> aJob )
 {
-    std::shared_lock<std::shared_mutex> lock( m_mutex, std::try_to_lock );
+    std::unique_lock<std::mutex> lock( m_mutex, std::try_to_lock );
 
     // this method is called from the reporters from potentially other threads
     // we have to guard ui calls with CallAfter

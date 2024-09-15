@@ -44,7 +44,7 @@
 #include <kicommon.h>
 #include <curl/curl.h>
 #include <string>
-#include <shared_mutex>
+#include <mutex>
 
 // CURL_EXTERN expands to dllimport on MinGW which causes gcc warnings.  This really should
 // expand to nothing on MinGW.
@@ -80,7 +80,7 @@ public:
      * Returns the mutex for shared locking when performing curl operations.
      * Unique locking is performed when shutting down.
      */
-    static std::shared_mutex& Mutex();
+    static std::mutex& Mutex();
 
     /**
      * Returns true if all curl operations should terminate.
